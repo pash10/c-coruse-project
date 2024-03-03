@@ -1,0 +1,31 @@
+#include <iostream>
+bool IsArithmeticProgression(int *p, int size);
+int main() {
+    // Write C++ code here
+    int size, *p1;
+    std:: cout << "input size ";
+    std:: cin >> size;
+    if(size <3){ // make sure it def 3 always 
+        size =3;
+    }
+    p1 = new int [size];
+    for(int i =0; i<size;i++){
+        std:: cout << "input numer";
+        std ::cin >> p1[i] ;
+    }
+    IsArithmeticProgression(p1,size);
+    delete []p1;
+    std :: cout <<"\n after shit ";
+    return 0;
+}
+
+bool IsArithmeticProgression(int *p,int size){ // def size is 3 
+   for(int i=0; i<size-2; i++){
+       if(p[i+1]-p[i] != p[i+2]-p[i+1]){
+           std :: cout << "well well well it bad";
+           return false;
+       }
+   }
+   std :: cout << "well well well it good mate";
+    return true;
+}

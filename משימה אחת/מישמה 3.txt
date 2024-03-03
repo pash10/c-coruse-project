@@ -1,0 +1,67 @@
+#include <iostream>
+#include <cstring>
+
+const int MAX_WORD_LENGTH = 100;
+const int MAX_DOUBLED_WORD_LENGTH = 200;
+
+int CountWords(const char* sentence) {
+    int count = 0;
+    for (int i = 0; sentence[i] != '\0'; ++i) {
+        if (sentence[i] == ' ') {
+            ++count;
+        }
+    }
+    return count + 1;
+}
+
+char* DuplicateWord(const char* word) {
+    int wordLength = strlen(word);
+    char* doubledWord = new char[wordLength * 2 + 1];
+
+    strcpy(doubledWord, word);
+    strcpy(doubledWord + wordLength, word);
+    
+    return doubledWord;
+}
+
+char** SplitIntoWords(const char* sentence, int& numWords) {
+    char tempWord[MAX_WORD_LENGTH];
+    char** words;
+    int wordIdx = 0;
+
+    numWords = CountWords(sentence);
+    words = new char*[numWords];
+    numWords = 0;
+
+    for (int i = 0, j = 0; sentence[i] != '\0'; ++i) {
+        while (sentence[i] != '\0' && sentence[i] != ' ') {
+            tempWord[j++] = sentence[i++];
+        }
+        tempWord[j] = '\0';
+        j = 0;
+
+        words[numWords++] = new char[strlen(tempWord) + 1];
+        strcpy(words[numWords - 1], tempWord);
+    }
+
+    return words;
+}
+
+int main() {
+    char sentence[MAX_WORD_LENGTH] = "this is a test sentence";
+    char** words;
+    int numWords;
+
+    words = SplitIntoWords(sentence, numWords);
+
+    for (int i = 0; i < numWords; ++i) {
+        char* doubledWord = DuplicateWord(words[i]);
+        std::cout << doubledWord << std::endl;
+
+        delete[] doubledWord;
+        delete[] words[i];
+    }
+
+    delete[] words;
+    return 0;
+}

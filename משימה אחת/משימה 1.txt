@@ -1,0 +1,56 @@
+#include <iostream>
+
+double WeightedAverage(int *values, double *weights, int size);
+
+int main() {
+    int size;
+    int *values;
+    double *weights;
+
+    std::cout << "Input array size: ";
+    std::cin >> size;
+
+    if(size < 1) {
+        std::cout << "Size must be greater than zero. Defaulting to size 1.\n";
+        size = 1;
+    }
+
+    values = new int[size];
+    weights = new double[size];
+
+    for(int i = 0; i < size; i++) {
+        std::cout << "Input value for index " << i << ": ";
+        std::cin >> values[i];
+    }
+
+    for(int i = 0; i < size; i++) {
+        std::cout << "Input weight for index " << i << ": ";
+        std::cin >> weights[i];
+    }
+
+    double result = WeightedAverage(values, weights, size);
+    std::cout << "The weighted average is: " << result << std::endl;
+
+    delete[] values;
+    delete[] weights;
+
+    std::cout << "\nMemory freed.";
+    return 0;
+}
+
+double WeightedAverage(int *values, double *weights, int size) {
+    if (size <= 0) {
+        return 0.0; // handle error
+    }
+
+    double numerator = 0.0;
+    double denominator = 0.0;
+
+    for (int i = 0; i < size; ++i) {
+        numerator += static_cast<double>(values[i]) * weights[i];
+        denominator += weights[i];
+    }
+
+    return numerator / denominator;
+}
+
